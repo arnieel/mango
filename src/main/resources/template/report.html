@@ -1,0 +1,21 @@
+<html>
+<head>
+</head>
+<body>
+<h1>${name}</h1>
+<table>
+    <tr>
+        <th>IN/OUT</th>
+        <th>Time</th>
+        <th>Image</th>
+    </tr>
+<#list logs as log>
+    <tr>
+        <td>${log.logType}</td>
+        <td>${log.time}</td>
+        <td><img src="${log.imagePath}"></td>
+    </tr>
+</#list>
+</table>
+</body>
+</html>

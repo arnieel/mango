@@ -12,4 +12,6 @@ dependencies {
     compile group: 'com.h2database', name: 'h2', version: '1.4.193'
     compile group: 'org.jdbi', name: 'jdbi', version: '2.77'
     compile group: 'com.lowagie', name: 'itext', version: '2.1.7'
+    compile group: 'commons-io', name: 'commons-io', version: '2.4'
+    compile group: 'org.freemarker', name:'freemarker', version: '2.3.14'
 }

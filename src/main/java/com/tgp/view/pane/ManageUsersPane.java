@@ -22,7 +22,7 @@ public class ManageUsersPane extends BorderPane {
 
    private static UserDao userDao = Dbi.getInstance().open(UserDao.class);
 
-   private static UserController userController = new UserController();
+   private UserController userController = new UserController();
 
    public ManageUsersPane() {
       setPadding(new Insets(12, 12, 12, 40));
