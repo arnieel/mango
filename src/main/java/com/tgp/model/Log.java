@@ -2,9 +2,6 @@ package com.tgp.model;
 
 import java.sql.Timestamp;
 
-/**
- * Created by Arniel on 1/15/2017.
- */
 public class Log {
 
    private int id;

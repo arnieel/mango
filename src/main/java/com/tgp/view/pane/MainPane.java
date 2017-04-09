@@ -25,13 +25,14 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class MainPane extends BorderPane {
 
    private static UserController userController = new UserController();
-
-   private static UserDao userDao = Dbi.getInstance().open(UserDao.class);
 
    private static LogDao logDao = Dbi.getInstance().open(LogDao.class);
 
@@ -62,7 +63,7 @@ public class MainPane extends BorderPane {
       Button timeIn = new Button("Time In");
       timeIn.setOnAction(e -> {
          int id = ids.get(choiceBox.getSelectionModel().getSelectedIndex());
-         User selectedUser = userDao.findUserById(id);
+         User selectedUser = userController.findUserById(id);
          List<Log> log = logDao.findInLogForToday(selectedUser.getId());
          if (!log.isEmpty() && log.size() == 2) {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -70,9 +71,9 @@ public class MainPane extends BorderPane {
             alert.setContentText("You've already logged in!");
             alert.showAndWait();
          } else {
-            String filename =  "C:/tgp/log/in/" + selectedUser.getFirstName()+selectedUser.getLastName()+System.currentTimeMillis()+".png";
-            ImageCapturer.captureImage(filename);
-            logDao.logUser(selectedUser.getId(), true, filename);
+            /*String filename =  "C:/tgp/log/in/" + selectedUser.getFirstName()+selectedUser.getLastName()+System.currentTimeMillis()+".png";
+            ImageCapturer.captureImage(filename);*/
+            logDao.logUser(selectedUser.getId(), true, "");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Logged in");
             alert.setContentText("Logged in.");
@@ -83,7 +84,7 @@ public class MainPane extends BorderPane {
       Button timeOut = new Button("Time Out");
       timeOut.setOnAction(e -> {
          int id = ids.get(choiceBox.getSelectionModel().getSelectedIndex());
-         User selectedUser = userDao.findUserById(id);
+         User selectedUser = userController.findUserById(id);
          List<Log> log = logDao.findOutLogForToday(selectedUser.getId());
 
          if (log != null && log.size() == 2) {
@@ -92,9 +93,9 @@ public class MainPane extends BorderPane {
             alert.setContentText("You've already logged out!");
             alert.showAndWait();
          } else {
-            String filename =  "C:/tgp/log/out/" + selectedUser.getFirstName()+selectedUser.getLastName()+System.currentTimeMillis()+".png";
-            ImageCapturer.captureImage(filename);
-            logDao.logUser(selectedUser.getId(), false, filename);
+           /* String filename =  "C:/tgp/log/out/" + selectedUser.getFirstName()+selectedUser.getLastName()+System.currentTimeMillis()+".png";
+            ImageCapturer.captureImage(filename);*/
+            logDao.logUser(selectedUser.getId(), false, "");
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Logged out");
             alert.setContentText("Logged out.");
@@ -149,14 +150,14 @@ public class MainPane extends BorderPane {
 
             List<String> htmlList = new ArrayList<>();
 
-            for (User user : userDao.getAllUsers()) {
+            for (User user : userController.getAllUsers()) {
                List<Log> logs = logDao.getLogsByDateRangeAndByUser(startDate, endDate, user.getId());
                Map<String, Object> data = new HashMap<>();
                data.put("name", user.getLastName() + ", " + user.getFirstName());
                List<LogViewModel> logViewModelList = new ArrayList<>();
                for (Log log : logs) {
                   LogViewModel logView = new LogViewModel();
-                  logView.setTime(log.getTime().toString());
+                  logView.setTime(formatTimeStamp(log.getTime()));
                   logView.setLogType(log.isIn() ? "IN" : "OUT");
                   logView.setImagePath(log.getImagePath());
                   logViewModelList.add(logView);
@@ -169,6 +170,9 @@ public class MainPane extends BorderPane {
             }
 
             FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialFileName(INITIAL_FILENAME);
+            fileChooser.setInitialDirectory(new File(System.getProperty("user.home") + "/Desktop"));
+
             File file = fileChooser.showSaveDialog(getScene().getWindow());
             if (file != null) {
                PdfBuilder.htmlsToPdf(htmlList, file);
@@ -183,6 +187,11 @@ public class MainPane extends BorderPane {
             alert.showAndWait();
          }
       }
+   }
+
+   private String formatTimeStamp(Timestamp timestamp) {
+      DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
+      return dateFormat.format(timestamp);
    }
 
    public class LogViewModel {
@@ -215,5 +224,9 @@ public class MainPane extends BorderPane {
       }
    }
 
-   private static final String PASSWORD = "root1234";
+   private static final String PASSWORD = "admin0987";
+
+   private static final String INITIAL_FILENAME = "export.pdf";
+
+   private static final String DATE_FORMAT = "MMM-dd-yyyy hh:mm:ss a";
 }

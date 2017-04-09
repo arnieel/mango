@@ -4,9 +4,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 
-/**
- * Created by Arniel on 1/6/2017.
- */
 public class AdminLoginDialog extends Dialog<String> {
 
    public AdminLoginDialog() {

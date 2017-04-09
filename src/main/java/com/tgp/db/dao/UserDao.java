@@ -12,13 +12,13 @@ import java.util.List;
 public interface UserDao extends BaseDao {
 
    @SqlUpdate("INSERT INTO user (firstname, lastname) VALUES (:firstName, :lastName)")
-   void insertUser(@Bind("firstName") String firstName, @Bind("lastName") String lastName);
+   int insertUser(@Bind("firstName") String firstName, @Bind("lastName") String lastName);
 
    @SqlUpdate("UPDATE user SET firstname=:firstName, lastname=:lastName WHERE id=:id")
-   void updateUser(@Bind("id") int id, @Bind("firstName") String firstName, @Bind("lastName") String lastName);
+   int updateUser(@Bind("id") int id, @Bind("firstName") String firstName, @Bind("lastName") String lastName);
 
    @SqlUpdate("UPDATE user SET deleted=1 WHERE id=:id")
-   void deleteUser(@Bind("id") int id);
+   int deleteUser(@Bind("id") int id);
 
    @SqlQuery("SELECT id, firstname, lastname FROM user WHERE firstname=:firstname AND lastname=:lastname AND deleted=0")
    @RegisterMapper(UserMapper.class)

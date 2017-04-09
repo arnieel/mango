@@ -7,6 +7,15 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType(Jar) {
+    destinationDir = file("demo/lib")
+}
+
+task copyDependencies(type: Copy) {
+    from configurations.compile
+    into 'demo/lib'
+}
+
 dependencies {
     compile group: 'com.github.sarxos', name: 'webcam-capture', version : '0.3.10'
     compile group: 'com.h2database', name: 'h2', version: '1.4.193'
