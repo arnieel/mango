@@ -7,9 +7,6 @@ import javafx.scene.layout.GridPane;
 
 import java.time.format.DateTimeFormatter;
 
-/**
- * Created by Arniel on 1/29/2017.
- */
 public class DatePickerDialog extends Dialog<Pair<String, String>> {
 
    public DatePickerDialog() {

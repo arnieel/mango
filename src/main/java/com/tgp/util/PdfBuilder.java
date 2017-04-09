@@ -19,8 +19,7 @@ import java.util.List;
 
 public class PdfBuilder {
 
-
-   public static File htmlsToPdf(List<String> htmls, File file) throws PdfException {
+   public static File exportHtmlToPdf(List<String> htmls, File file) throws PdfException {
       if (htmls == null || htmls.isEmpty()) {
          throw new IllegalArgumentException(INVALID_HTML_MESSAGE);
       }

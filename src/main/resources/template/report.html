@@ -13,7 +13,7 @@
     <tr>
         <td>${log.logType}</td>
         <td>${log.time}</td>
-        <td><img src="${log.imagePath}"></td>
+        <#if log.imagePath?has_content><td><img src="${log.imagePath}"></td><#else><td></td></#if>
     </tr>
 </#list>
 </table>

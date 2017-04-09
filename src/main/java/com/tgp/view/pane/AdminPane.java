@@ -1,6 +1,5 @@
 package com.tgp.view.pane;
 
-
 import com.tgp.view.stage.ManageUsersStage;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

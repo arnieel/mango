@@ -1,11 +1,8 @@
 package com.tgp.view.pane;
 
 import com.tgp.controller.UserController;
-import com.tgp.db.Dbi;
-import com.tgp.db.dao.UserDao;
 import com.tgp.model.User;
 import com.tgp.util.Pair;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -20,16 +17,12 @@ import java.util.Optional;
 
 public class ManageUsersPane extends BorderPane {
 
-   private static UserDao userDao = Dbi.getInstance().open(UserDao.class);
-
    private UserController userController = new UserController();
 
    public ManageUsersPane() {
       setPadding(new Insets(12, 12, 12, 40));
 
       Button addUserButton = new Button("Add User");
-      Button editUserButton = new Button("Edit User");
-      editUserButton.setDisable(true);
       Button deleteUserButton = new Button("Delete User");
 
       addUserButton.setOnAction(e -> {
@@ -74,16 +67,12 @@ public class ManageUsersPane extends BorderPane {
          Optional<Pair<String, String>> result = dialog.showAndWait();
 
          result.ifPresent(name -> {
-            userDao.insertUser(name._1(), name._2());
+            userController.insertUser(name._1(), name._2());
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("User added");
             alert.setContentText(name._1() + " " + name._2() + " added.");
             alert.showAndWait();
          });
-      });
-
-      editUserButton.setOnAction(e -> {
-
       });
 
       deleteUserButton.setOnAction(e -> {
@@ -106,8 +95,8 @@ public class ManageUsersPane extends BorderPane {
                String[] lastNameFirstName = result.get().split(",");
                String firstName = lastNameFirstName[1].trim();
                String lastName = lastNameFirstName[0].trim();
-               User user = userDao.findUserByName(firstName, lastName);
-               userDao.deleteUser(user.getId());
+               User user = userController.findUserByName(firstName, lastName);
+               userController.deleteUser(user);
                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                alert.setTitle("User deleted");
                alert.setContentText("User Deleted");
@@ -121,7 +110,6 @@ public class ManageUsersPane extends BorderPane {
 
       vbox.setAlignment(Pos.CENTER_LEFT);
       vbox.getChildren().add(addUserButton);
-      vbox.getChildren().add(editUserButton);
       vbox.getChildren().add(deleteUserButton);
 
       setCenter(vbox);
