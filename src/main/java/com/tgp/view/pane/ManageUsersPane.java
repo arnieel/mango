@@ -1,11 +1,8 @@
 package com.tgp.view.pane;
 
 import com.tgp.controller.UserController;
-import com.tgp.db.Dbi;
-import com.tgp.db.dao.UserDao;
 import com.tgp.model.User;
 import com.tgp.util.Pair;
-import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -99,7 +96,7 @@ public class ManageUsersPane extends BorderPane {
                String firstName = lastNameFirstName[1].trim();
                String lastName = lastNameFirstName[0].trim();
                User user = userController.findUserByName(firstName, lastName);
-               userController.deleteuser(user);
+               userController.deleteUser(user);
                Alert alert = new Alert(Alert.AlertType.INFORMATION);
                alert.setTitle("User deleted");
                alert.setContentText("User Deleted");

@@ -1,0 +1,20 @@
+CREATE SCHEMA IF NOT EXISTS tgp;
+USE tgp;
+
+CREATE TABLE user (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(255),
+    last_name VARCHAR(255),
+    deleted BOOLEAN NOT NULL DEFAULT 0
+);
+
+CREATE TABLE log (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	user_id INT,
+	time DATETIME,
+	is_in BOOLEAN,
+	image_path VARCHAR(1000),
+	FOREIGN KEY(user_id) REFERENCES user(id)
+);
+
+COMMIT;

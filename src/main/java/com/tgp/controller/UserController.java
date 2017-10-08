@@ -12,11 +12,8 @@ public class UserController {
 
    private static UserDao userDao = Dbi.getInstance().open(UserDao.class);
 
-   private static UserController userController = new UserController();
-
    public List<Pair<Integer, String>> getListOfNames() {
-      UserDao dao = Dbi.getInstance().open(UserDao.class);
-      List<User> users = dao.getAllUsers();
+      List<User> users = userDao.getAllUsers();
 
       List<Pair<Integer, String>> names = new ArrayList<>();
       for (User user : users) {
@@ -31,11 +28,10 @@ public class UserController {
    }
 
    public User findUserByName(String firstName, String lastName) {
-      User user = userDao.findUserByName(firstName, lastName);
-      return user;
+      return userDao.findUserByName(firstName, lastName);
    }
 
-   public int deleteuser(User user) {
+   public int deleteUser(User user) {
       return userDao.deleteUser(user.getId());
    }
 
