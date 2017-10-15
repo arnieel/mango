@@ -28,10 +28,9 @@ public class AppMain extends Application {
                 System.exit(0);
             });
         } catch (Exception e) {
-            Platform.runLater(() -> {
-               AlertFactory.showErrorAlert(e);
-            });
-
+            Platform.runLater(() ->
+               AlertFactory.showErrorAlert(e)
+            );
         }
     }
 

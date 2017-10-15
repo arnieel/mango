@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 
 public class AdminScene extends Scene {
 
-   public AdminScene() {
-      super(new AdminPane(), 350, 220);
-   }
+    public AdminScene() {
+        super(new AdminPane(), 350, 220);
+    }
 }

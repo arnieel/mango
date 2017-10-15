@@ -22,7 +22,7 @@ public class LogController {
         return logDao.findOutLogForToday(userId);
     }
 
-    public List<Log> getLogsByDateRangeAndByUser(String startDate, String endDate, int userId){
+    public List<Log> getLogsByDateRangeAndByUser(String startDate, String endDate, int userId) {
         return logDao.getLogsByDateRangeAndByUser(startDate, endDate, userId);
     }
 }

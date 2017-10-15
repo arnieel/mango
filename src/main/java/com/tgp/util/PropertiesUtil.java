@@ -1,4 +1,4 @@
-package com.tgp.view.util;
+package com.tgp.util;
 
 import com.tgp.view.alert.AlertFactory;
 

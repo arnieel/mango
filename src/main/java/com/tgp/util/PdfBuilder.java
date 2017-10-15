@@ -19,50 +19,50 @@ import java.util.List;
 
 public class PdfBuilder {
 
-   public static File exportHtmlToPdf(List<String> htmls, File file) throws PdfException {
-      if (htmls == null || htmls.isEmpty()) {
-         throw new IllegalArgumentException(INVALID_HTML_MESSAGE);
-      }
+    public static File exportHtmlToPdf(List<String> htmls, File file) throws PdfException {
+        if (htmls == null || htmls.isEmpty()) {
+            throw new IllegalArgumentException(INVALID_HTML_MESSAGE);
+        }
 
-      ByteArrayOutputStream os = null;
-      Document doc;
+        ByteArrayOutputStream os = null;
+        Document doc;
 
-      try {
-         os = new ByteArrayOutputStream();
-         doc = new Document(PageSize.LETTER);
-         PdfWriter.getInstance(doc, os);
-         doc.open();
-         for (String html : htmls) {
-            if (!html.startsWith(HTML_START)) {
-               html = DOCUMENT_START + html + DOCUMENT_END;
+        try {
+            os = new ByteArrayOutputStream();
+            doc = new Document(PageSize.LETTER);
+            PdfWriter.getInstance(doc, os);
+            doc.open();
+            for (String html : htmls) {
+                if (!html.startsWith(HTML_START)) {
+                    html = DOCUMENT_START + html + DOCUMENT_END;
+                }
+                doc.newPage();
+                doc.add(new Chunk(""));
+                HTMLWorker hw = new HTMLWorker(doc);
+                hw.parse(new StringReader(html));
             }
-            doc.newPage();
-            doc.add(new Chunk(""));
-            HTMLWorker hw = new HTMLWorker(doc);
-            hw.parse(new StringReader(html));
-         }
-         doc.close();
-         byte[] pdfBytes = os.toByteArray();
+            doc.close();
+            byte[] pdfBytes = os.toByteArray();
 
-         FileUtils.writeByteArrayToFile(file, pdfBytes);
+            FileUtils.writeByteArrayToFile(file, pdfBytes);
 
-      } catch (DocumentException | IOException e) {
-         throw new PdfException(e);
-      } finally {
-         IOUtils.closeQuietly(os);
-      }
+        } catch (DocumentException | IOException e) {
+            throw new PdfException(e);
+        } finally {
+            IOUtils.closeQuietly(os);
+        }
 
-      return file;
-   }
+        return file;
+    }
 
-   private static final String HTML_TAG = "html";
+    private static final String HTML_TAG = "html";
 
-   private static final String HTML_START = "<" + HTML_TAG + ">";
+    private static final String HTML_START = "<" + HTML_TAG + ">";
 
-   private static final String DOCUMENT_START = "<html><body>";
+    private static final String DOCUMENT_START = "<html><body>";
 
-   private static final String DOCUMENT_END = "</body></html>";
+    private static final String DOCUMENT_END = "</body></html>";
 
-   private static final String INVALID_HTML_MESSAGE = "HTML is not initialized.";
+    private static final String INVALID_HTML_MESSAGE = "HTML is not initialized.";
 
 }

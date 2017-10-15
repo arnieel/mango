@@ -1,7 +1,7 @@
 package com.tgp.db;
 
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
-import com.tgp.view.util.PropertiesUtil;
+import com.tgp.util.PropertiesUtil;
 import org.skife.jdbi.v2.DBI;
 
 public class Dbi {
@@ -15,6 +15,7 @@ public class Dbi {
         if (dbi == null) {
             MysqlDataSource ds = new MysqlDataSource();
             ds.setDatabaseName(PropertiesUtil.getValue("mysql.db.name"));
+            ds.setServerName(PropertiesUtil.getValue("mysql.db.host"));
             ds.setUser(PropertiesUtil.getValue("mysql.db.user"));
             ds.setPassword(PropertiesUtil.getValue("mysql.db.password"));
             ds.setPort(Integer.valueOf(PropertiesUtil.getValue("mysql.db.port")));

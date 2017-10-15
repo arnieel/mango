@@ -17,4 +17,25 @@ public class AlertFactory {
         alert.getDialogPane().setExpandableContent(textArea);
         alert.showAndWait();
     }
+
+    public static void showIncorrectPasswordAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Warning Dialog");
+        alert.setContentText("Password incorrect.");
+        alert.showAndWait();
+    }
+
+    public static void showWarningAlert(String title, String text) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
+
+    public static void showInformationAlert(String title, String text) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(text);
+        alert.showAndWait();
+    }
 }
