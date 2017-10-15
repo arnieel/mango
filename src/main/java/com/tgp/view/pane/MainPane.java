@@ -6,16 +6,16 @@ import com.tgp.model.Log;
 import com.tgp.model.User;
 import com.tgp.util.FtlConfig;
 import com.tgp.util.Pair;
+import com.tgp.util.PasswordUtil;
 import com.tgp.util.PdfBuilder;
 import com.tgp.view.alert.AlertFactory;
 import com.tgp.view.dialog.AdminLoginDialog;
 import com.tgp.view.dialog.DatePickerDialog;
 import com.tgp.view.stage.AdminStage;
-import com.tgp.view.util.PropertiesUtil;
-import com.tgp.view.util.Time;
+import com.tgp.util.Time;
+import com.tgp.view.viewmodel.LogViewModel;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -65,16 +65,10 @@ public class MainPane extends BorderPane {
             User selectedUser = userController.findUserById(id);
             List<Log> log = logController.findInLogForToday(selectedUser.getId());
             if (!log.isEmpty() && log.size() == 2) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Already logged in for today");
-                alert.setContentText("You've already logged in!");
-                alert.showAndWait();
+                AlertFactory.showWarningAlert("Already logged in for today", "You've already logged in!");
             } else {
                 logController.logUser(selectedUser.getId(), true, "");
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Logged in");
-                alert.setContentText("Logged in.");
-                alert.showAndWait();
+                AlertFactory.showInformationAlert("Logged in", "Logged in.");
             }
         });
 
@@ -85,16 +79,10 @@ public class MainPane extends BorderPane {
             List<Log> log = logController.findOutLogForToday(selectedUser.getId());
 
             if (log != null && log.size() == 2) {
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Already logged out for today");
-                alert.setContentText("You've already logged out!");
-                alert.showAndWait();
+                AlertFactory.showWarningAlert("Already logged out for today", "You've already logged out!");
             } else {
                 logController.logUser(selectedUser.getId(), false, "");
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Logged out");
-                alert.setContentText("Logged out.");
-                alert.showAndWait();
+                AlertFactory.showInformationAlert("Logged out", "Logged out.");
             }
         });
 
@@ -118,14 +106,11 @@ public class MainPane extends BorderPane {
             Optional<String> result = adminLoginDialog.showAndWait();
 
             result.ifPresent(password -> {
-                if (!password.isEmpty() && password.equals(PropertiesUtil.getValue("app.admin.password"))) {
+                if (PasswordUtil.checkPassword(password)) {
                     getScene().getWindow().hide();
                     new AdminStage();
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Warning Dialog");
-                    alert.setContentText("Password incorrect.");
-                    alert.showAndWait();
+                    AlertFactory.showIncorrectPasswordAlert();
                 }
             });
         });
@@ -181,36 +166,6 @@ public class MainPane extends BorderPane {
     private String formatTimeStamp(Timestamp timestamp) {
         DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
         return dateFormat.format(timestamp);
-    }
-
-    public class LogViewModel {
-        private String logType;
-        private String time;
-        private String imagePath;
-
-        public void setImagePath(String imagePath) {
-            this.imagePath = imagePath;
-        }
-
-        public void setLogType(String logType) {
-            this.logType = logType;
-        }
-
-        public void setTime(String time) {
-            this.time = time;
-        }
-
-        public String getImagePath() {
-            return imagePath;
-        }
-
-        public String getLogType() {
-            return logType;
-        }
-
-        public String getTime() {
-            return time;
-        }
     }
 
     private static final String INITIAL_FILENAME = "export.pdf";

@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 
 public class ManageUsersScene extends Scene {
 
-   public ManageUsersScene() {
-      super(new ManageUsersPane(), 350, 220);
-   }
+    public ManageUsersScene() {
+        super(new ManageUsersPane(), 350, 220);
+    }
 }

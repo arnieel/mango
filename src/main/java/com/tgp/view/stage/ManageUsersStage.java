@@ -5,13 +5,13 @@ import javafx.stage.Stage;
 
 public class ManageUsersStage extends Stage {
 
-   public ManageUsersStage() {
-      setTitle(TITLE);
-      setScene(new ManageUsersScene());
-      show();
-      setResizable(false);
-      setOnCloseRequest(e -> new AdminStage());
-   }
+    public ManageUsersStage() {
+        setTitle(TITLE);
+        setScene(new ManageUsersScene());
+        show();
+        setResizable(false);
+        setOnCloseRequest(e -> new AdminStage());
+    }
 
-   private final String TITLE = "Manage Users";
+    private final String TITLE = "Manage Users";
 }

@@ -7,17 +7,17 @@ import javafx.stage.Stage;
 
 public class MainStage extends Stage {
 
-   public MainStage() {
-      Scene mainScene = new MainScene();
-      setTitle(TITLE);
-      setScene(mainScene);
-      show();
-      setResizable(false);
-      setOnCloseRequest(e -> {
-         Platform.exit();
-         System.exit(0);
-      });
-   }
+    public MainStage() {
+        Scene mainScene = new MainScene();
+        setTitle(TITLE);
+        setScene(mainScene);
+        show();
+        setResizable(false);
+        setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
+    }
 
-   private static final String TITLE = "Time Tracker";
+    private static final String TITLE = "Time Tracker";
 }

@@ -9,14 +9,14 @@ import java.sql.SQLException;
 
 public class LogMapper implements ResultSetMapper<Log> {
 
-   @Override
-   public Log map(int index, ResultSet r, StatementContext ctx) throws SQLException {
-      Log log = new Log();
-      log.setId(r.getInt("id"));
-      log.setImagePath(r.getString("image_path"));
-      log.setIn(r.getBoolean("in"));
-      log.setTime(r.getTimestamp("time"));
-      log.setUserId(r.getInt("user_id"));
-      return log;
-   }
+    @Override
+    public Log map(int index, ResultSet r, StatementContext ctx) throws SQLException {
+        Log log = new Log();
+        log.setId(r.getInt("id"));
+        log.setImagePath(r.getString("image_path"));
+        log.setIn(r.getBoolean("is_in"));
+        log.setTime(r.getTimestamp("time"));
+        log.setUserId(r.getInt("user_id"));
+        return log;
+    }
 }

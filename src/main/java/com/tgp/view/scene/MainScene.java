@@ -5,7 +5,7 @@ import javafx.scene.Scene;
 
 public class MainScene extends Scene {
 
-   public MainScene() {
-      super(new MainPane(), 350, 220);
-   }
+    public MainScene() {
+        super(new MainPane(), 350, 220);
+    }
 }
